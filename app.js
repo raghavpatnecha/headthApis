@@ -45,7 +45,7 @@ db.execute('select * from userbasic').then(result=>{
     console.log('error');
 });
 
-
+app.use(express.static(__dirname + '/images'));
 
 //defining a function to set headers so that it could be accessible from other ip addressses as well
 app.use((req,res,next)=>{

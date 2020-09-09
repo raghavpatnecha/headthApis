@@ -27,4 +27,8 @@ module.exports=class Prescription{
     {
         return db.execute('INSERT INTO prescriptions(mobile,title,date,image,doctor,observation) VALUES (?,?,?,?,?,?)',[mobile,title,date,image,doctor,observation]);
     }
+    static getAllById(mobile)
+    {
+        return db.execute('SELECT * FROM prescriptions WHERE mobile=(?)',[mobile]);
+    }
 };
