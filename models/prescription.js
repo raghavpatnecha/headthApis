@@ -31,4 +31,8 @@ module.exports=class Prescription{
     {
         return db.execute('SELECT * FROM prescriptions WHERE mobile=(?)',[mobile]);
     }
+    static getFrontPres(mobile)
+    {
+        return db.execute('SELECT * FROM prescriptions WHERE mobile=(?) LIMIT 3',[mobile]);
+    }
 };

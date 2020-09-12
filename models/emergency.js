@@ -13,6 +13,11 @@ module.exports= class Emergency{
     }
     static getEmergencyContacts(mobile)
     {
-        return db.execute('SELECT phone,name FROM emergency WHERE mobile=(?)',[mobile]);
+        return db.execute('SELECT phone,name,rec_id FROM emergency WHERE mobile=(?)',[mobile]);
     }
+    static updateEmergency(rec_id,name,phone)
+    {
+        return db.execute('UPDATE emergency SET name=(?),phone=(?) WHERE rec_id=(?)',[name,phone,rec_id]);
+    }
+    
 }

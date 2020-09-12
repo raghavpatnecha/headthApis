@@ -16,4 +16,8 @@ module.exports=class User{
     {
         return db.execute('SELECT * FROM userbasic WHERE mobile=(?)',[mobile]);
     }
+    static updateProfile(mobile,name,height,weight,dob,blood)
+    {
+        return db.execute('UPDATE userbasic SET name=(?),height=(?),weight=(?),dob=(?),blood=(?)WHERE mobile=(?)',[name,height,weight,dob,blood,mobile]);
+    }
 }
