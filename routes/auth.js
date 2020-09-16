@@ -1,6 +1,7 @@
 const express=require('express');
 const {body}=require('express-validator/check');
 const controlauth=require('../controller/controlauth');
+const extras=require('../controller/extras');
 
 const router=express();
 
@@ -44,5 +45,12 @@ router.post('/updateEmergency',[
 router.post('/singleEmergency',controlauth.saveSingleEmergency);
 //route to get the main layout prescription max length 3
 router.post('/frontpres',controlauth.frontPrescription);
+//route to add a new allergy,medicine,dieseas,history
+router.post('/allergyAdd',extras.addAllergy);
+router.post('/dieseasAdd',extras.addDieseas);
+router.post('/historyAdd',extras.addHistory);
+router.post('/medicineAdd',extras.addMedicine);
+//routes to get all the allergy,medicine,dieseas,history of a user
+router.post('/getDieseas',extras.getDieseas);
 
 module.exports=router;
