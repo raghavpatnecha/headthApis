@@ -14,4 +14,12 @@ module.exports=class Dieseas{
     {
         return db.execute('SELECT * FROM dieseas WHERE mobile=(?)',[mobile]);
     }
+    static deleteDieseas(id)
+    {
+        return db.execute('DELETE FROM dieseas WHERE id=(?)',[id]);
+    }
+    static updateDiesease(id,name,details)
+    {
+        return db.execute('UPDATE dieseas SET name=(?),details=(?) WHERE id=(?)',[name,details,id]);
+    }
 }

@@ -31,6 +31,10 @@ module.exports=class Prescription{
     {
         return db.execute('SELECT * FROM prescriptions WHERE mobile=(?)',[mobile]);
     }
+    static deletePres(id)
+    {
+        return db.execute('DELETE FROM prescriptions WHERE id=(?)',[id]);
+    }
     static getFrontPres(mobile)
     {
         return db.execute('SELECT * FROM prescriptions WHERE mobile=(?) LIMIT 3',[mobile]);

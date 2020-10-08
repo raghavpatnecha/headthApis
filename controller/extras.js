@@ -115,3 +115,258 @@ exports.getDieseas=(req,res,next)=>{
         next(err);
     });
 }
+exports.getMedicines=(req,res,next)=>{
+    const mobile=req.body.mobile;
+    if(!mobile||mobile.length<10)
+    {
+        const err = new Error("Invalid Request");
+        err.statusCode = 200;
+        throw err;
+    }
+    medicine.getMedicines(mobile).then(result=>{
+        res.status(201).json({status:1,data:result[0]});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.getallergy=(req,res,next)=>{
+    const mobile=req.body.mobile;
+    if(!mobile||mobile.length<10)
+    {
+        const err = new Error("Invalid Request");
+        err.statusCode = 200;
+        throw err;
+    }
+    allergy.getAllergyByMobile(mobile).then(result=>{
+        res.status(201).json({status:1,data:result[0]});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.getHistory=(req,res,next)=>{
+    const mobile=req.body.mobile;
+    if(!mobile||mobile.length<10)
+    {
+        const err = new Error("Invalid Request");
+        err.statusCode = 200;
+        throw err;
+    }
+    history.getHistoryByMobile(mobile).then(result=>{
+        res.status(201).json({status:1,data:result[0]});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateAllergy=(req,res,next)=>{
+    const id=req.body.id;
+    const allergy2=req.body.allergy;
+    const triggers=req.body.triggers;
+    if(!id||!allergy||!triggers)
+    {
+        const err=new Error("Valid arguments not passed");
+        err.statusCode=200;
+        throw err;
+    }
+    allergy.updateAllergy(id,allergy2,triggers).then(result=>{
+        res.status(201).json({status:1,msg:'Allergy Updated..'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateHistory=(req,res,next)=>{
+    const id=req.body.id;
+    const title=req.body.title;
+    const description=req.body.description;
+    if(!id||!title||!description)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    history.updateHistory(id,title,description).then(result=>{
+        res.status(201).json({status:1,msg:'History Updated..'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateMedicine=(req,res,next)=>{
+    const id=req.body.id;
+    const name=req.body.name;
+    const purpose=req.body.purpose;
+    const duration=req.body.duration;
+    const dosage=req.body.dosage;
+    if(!id||!name||!purpose||!duration||!dosage)
+    {
+        const err=new Error("Invalid Request.....");
+        err.statusCode=200;
+        throw err;
+    }
+    medicine.updateMedicine(id,name,purpose,dosage,duration).then(result=>{
+        res.status(201).json({status:1,msg:'Medicine Updated..'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateDieseas=(req,res,next)=>{
+    const id=req.body.id;
+    const name=req.body.name;
+    const details=req.body.details;
+    if(!id||!name||!details)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    dieseas.updateDiesease(id,name,details).then(result=>{
+        res.status(201).json({status:1,msg:'Dieseas Updated..'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.deleteMedicine=(req,res,next)=>{
+    let id=req.body.id;
+    console.log(id);
+    if(!id)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    else if(id.length<=0)
+    {
+        const err=new Error('No Elements to be deleted');
+        err.statusCode=200;
+        throw err;
+    }
+    else{
+        id=id;
+        for(i=0;i<id.length;i++)
+        {
+            let obj=id[i];
+            console.log(obj.id);
+            medicine.deleteMedicine(obj.id).then(result=>{
+                console.log(result);
+            });
+        }
+        res.status(201).json({status:1,msg:"Items deleted successfully"});
+    }
+}
+exports.deleteAllergy=(req,res,next)=>{
+    let id=req.body.id;
+    console.log(id);
+    if(!id)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    else if(id.length<=0)
+    {
+        const err=new Error('No Elements to be deleted');
+        err.statusCode=200;
+        throw err;
+    }
+    else{
+        id=id;
+        for(i=0;i<id.length;i++)
+        {
+            let obj=id[i];
+            console.log(obj.id);
+            allergy.deleteAllergy(obj.id).then(result=>{
+                console.log(result);
+            });
+        }
+        res.status(201).json({status:1,msg:"Items deleted successfully"});
+    }
+}
+exports.deleteHistory=(req,res,next)=>{
+    let id=req.body.id;
+    console.log(id);
+    if(!id)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    else if(id.length<=0)
+    {
+        const err=new Error('No Elements to be deleted');
+        err.statusCode=200;
+        throw err;
+    }
+    else{
+        id=id;
+        for(i=0;i<id.length;i++)
+        {
+            let obj=id[i];
+            console.log(obj.id);
+            history.deleteHistory(obj.id).then(result=>{
+                console.log(result);
+            });
+        }
+        res.status(201).json({status:1,msg:"Items deleted successfully"});
+    }
+}
+exports.deleteDieases=(req,res,next)=>{
+    let id=req.body.id;
+    console.log(id);
+    if(!id)
+    {
+        const err=new Error("Invalid Request");
+        err.statusCode=200;
+        throw err;
+    }
+    else if(id.length<=0)
+    {
+        const err=new Error('No Elements to be deleted');
+        err.statusCode=200;
+        throw err;
+    }
+    else{
+        id=id;
+        for(i=0;i<id.length;i++)
+        {
+            let obj=id[i];
+            console.log(obj.id);
+            dieseas.deleteDieseas(obj.id).then(result=>{
+                console.log(result);
+            });
+        }
+        res.status(201).json({status:1,msg:"Items deleted successfully"});
+    }
+}

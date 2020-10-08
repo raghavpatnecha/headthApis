@@ -17,4 +17,12 @@ module.exports=class Medicine{
     {
         return db.execute('SELECT * FROM medicine WHERE mobile=(?)',[mobile]);
     }
+    static updateMedicine(id,name,purpose,dosage,duration)
+    {
+        return db.execute('UPDATE medicine SET name=(?),purpose=(?),duration=(?),dosage=(?) WHERE id=(?)',[name,purpose,duration,dosage,id]);
+    }
+    static deleteMedicine(id)
+    {
+        return db.execute('DELETE FROM medicine WHERE id=(?)',[id]);
+    }
 }

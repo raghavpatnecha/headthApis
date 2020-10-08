@@ -14,4 +14,12 @@ module.exports = class History {
     {
         return db.execute('SELECT * FROM history WHERE mobile=(?)',[mobile]);
     }
+    static updateHistory(id,title,decription)
+    {
+        return db.execute('UPDATE history SET title=(?),description=(?) WHERE id=(?)',[title,decription,id]);
+    }
+    static deleteHistory(id)
+    {
+        return db.execute('DELETE FROM history WHERE id=(?)',[id]);
+    }
 }

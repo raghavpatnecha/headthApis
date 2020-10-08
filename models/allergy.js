@@ -19,4 +19,12 @@ module.exports=class Allergy{
     {
         return db.execute('SELECT * FROM allergies WHERE mobile=(?)',[mobile]);
     }
+    static deleteAllergy(id)
+    {
+        return db.execute('DELETE FROM allergies WHERE id=(?)',[id]);
+    }
+    static updateAllergy(id,allergy,triggers)
+    {
+        return db.execute('UPDATE allergies SET allergy=(?),triggers=(?) WHERE id=(?)',[allergy,triggers,id]);
+    }
 }

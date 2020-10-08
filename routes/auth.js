@@ -52,5 +52,30 @@ router.post('/historyAdd',extras.addHistory);
 router.post('/medicineAdd',extras.addMedicine);
 //routes to get all the allergy,medicine,dieseas,history of a user
 router.post('/getDieseas',extras.getDieseas);
+router.post('/getAllergy',extras.getallergy);
+router.post('/getHistory',extras.getHistory);
+router.post('/getMedicine',extras.getMedicines);
+//updation routes of allergies,medicine,dieseas and history of a user
+router.post('/updateAllergy',extras.updateAllergy);
+router.post('/updateHistory',extras.updateHistory);
+router.post('/updateMedicine',extras.updateMedicine);
+router.post('/updateDiesease',extras.updateDieseas);
+//routes to delete allergy,history,medicine,dieseas
+router.post('/deleteAllergy',extras.deleteAllergy);
+router.post('/deleteHistory',extras.deleteHistory);
+router.post('/deleteMedicine',extras.deleteMedicine);
+router.post('/deleteDieseas',extras.deleteDieases);
+router.post('/deletePrescription',controlauth.deletePres);
+router.post('/deleteReport',controlauth.deleteReports);
+//route to add a report
+router.post('/addReport',controlauth.addReport);
+//route to get reports specific to a user
+router.post('/getReports',controlauth.getReports);
+//route to get top reports
+router.post('/gettopreport',controlauth.getTopReports);
+//route for qr scanner
+router.post('/getQR',controlauth.qrScanner);
+//to get the level of the user
+router.post('/getLevel',controlauth.getLevel);
 
 module.exports=router;
