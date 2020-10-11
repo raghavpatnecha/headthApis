@@ -2,7 +2,7 @@
   "name": "headth",
   "version": "1.0.0",
   "description": "a api application for the headth corporatio",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -553,9 +553,9 @@ exports.qrScanner = (req, res, next) => {
 exports.deletePres=(req,res,next)=>{
     let id=req.body.id;
     let files=req.body.path;
-    if(!id||!path)
+    if(!id||!files)
     {
-        const err=new Error("Invlid Request");
+        const err=new Error("Invalid Request");
         err.statusCode=200;
         throw err;
     }
@@ -566,11 +566,13 @@ exports.deletePres=(req,res,next)=>{
         throw err;
     }
     else{
+        let s=0;
         for(i=0;i<id.length;i++)
         {
             let item=id[i];
+            s=i;
         prescription.deletePres(item.id).then(result=>{
-            let item_image=files[i];
+            let item_image=files[s];
             return clearImage(item_image.path);
         }).then(result=>{
             console.log("all ok image deleted");
@@ -590,10 +592,9 @@ exports.deleteReports=(req,res,next)=>{
     let id=req.body.id;
     let files=req.body.path;
     console.log(files);
-    res.status(201).json({status:1,msg:"All marked prescriptions deleted"});
-    if(!id||!path)
+    if(!id||!files)
     {
-        const err=new Error("Invlid Request");
+        const err=new Error("Invalid Request");
         err.statusCode=200;
         throw err;
     }
@@ -604,11 +605,13 @@ exports.deleteReports=(req,res,next)=>{
         throw err;
     }
     else{
+        let s=0;
         for(i=0;i<id.length;i++)
         {
             let item=id[i];
         report.deleteReport(item.id).then(result=>{
-            let item_image=files[i];
+            s=i;
+            let item_image=files[s];
             return clearImage(item_image.path);
         }).then(result=>{
             console.log("all ok image deleted");
