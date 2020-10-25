@@ -6,6 +6,7 @@ const history = require('../models/history');
 const dieseas = require('../models/dieseas');
 const medicine = require('../models/medicine');
 const allergy = require('../models/allergy');
+const upgrade=require('../models/upgrade');
 const fs = require('fs');
 const path = require('path');
 const { validationResult } = require('express-validator/check');
@@ -27,6 +28,7 @@ exports.registerUser = (req, res, next) => {
     const weight = req.body.weight;
     const blood = req.body.blood;
     const dob = req.body.dob;
+    const level="1";
     if (!name || !mobile || !height || !weight || !blood || !dob) {
         const err = new Error("Invalid data");
         err.statusCode = 200;
@@ -45,7 +47,7 @@ exports.registerUser = (req, res, next) => {
     console.log(weight);
     console.log(blood);
     console.log(dob);
-    const u1 = new user(mobile, name, dob, height, weight, blood);
+    const u1 = new user(mobile, name, dob, height, weight, blood,level);
     u1.save().then(result => {
         console.log('data entered');
         res.status(201).json({
@@ -130,16 +132,16 @@ exports.addPrescription = (req, res, next) => {
     let doctor = req.body.doctor;
     let observation = req.body.observation;
     let image = req.body.image_64;
-
-    let name = req.body.name + '.jpeg';
-    if (!name || !mobile || !title || !date || !observation || !image || !name) {
+    let typeF=req.body.typef;
+    let name = req.body.name + typeF;
+    if (!name || !mobile || !title || !date || !observation || !image || !name|| !typeF) {
         const err = new Error("Invalid data");
         err.statusCode = 200;
         throw err;
     }
     console.log(mobile + " " + title + " " + date + " " + doctor + " " + observation);
-    image = 'data:image/jpeg;base64,' + image;
-    console.log(image);
+    image = image;
+   // console.log(image);
     let imgB64Data = decodeBase64Image(image);
     let imageBuffer = imgB64Data.data;
     let type = imgB64Data.type;
@@ -191,8 +193,9 @@ exports.addReport = (req, res, next) => {
     const data = req.body.data;
     const name = req.body.name;
     const typeF = req.body.type;
+    const category=req.body.category;
     let file = name + typeF;
-    if (!title || !observer || !date || !detail || !mobile.length == 10 || !data || !name || !typeF) {
+    if (!title || !observer || !date || !detail || !mobile.length == 10 || !data || !name || !typeF|| !category) {
         const err = new Error("Invalid Request");
         err.statusCode = 200;
         throw err;
@@ -213,8 +216,8 @@ exports.addReport = (req, res, next) => {
         error.statusCode = 422;
         throw error;
     }
-    console.log(title + " " + observer + " " + detail + " " + date + " " + fileName + " " + typeF + " " + mobile);
-    const entry = new report(title, observer, detail, date, fileName, typeF, mobile);
+    console.log(title + " " + observer + " " + detail + " " + date + " " + fileName + " " + typeF + " " + mobile+" "+category);
+    const entry = new report(title, observer, detail, date, fileName, typeF, mobile,category);
     entry.save().then(result => {
         res.status(201).json({ status: 1, msg: 'Report inserted successfully' });
     }).catch(err => {
@@ -482,7 +485,6 @@ exports.qrScanner = (req, res, next) => {
     const mobile = req.body.mobile;
     const accesslevel = req.body.level;
     if (!mobile || !accesslevel) {
-        const err = new Error("Invalid request");
         err.statusCode = 200;
         throw err;
     }
@@ -626,6 +628,46 @@ exports.deleteReports=(req,res,next)=>{
         }
         res.status(201).json({status:1,msg:"All marked prescriptions deleted"});
     }
+}
+exports.upgradeProfile=(req,res,next)=>{
+    const mobile=req.body.mobile;
+    const request=req.body.request;
+    if(!mobile||!request)
+    {
+        const error=new Error("invalid request");
+        error.statusCode=200;
+        throw error;
+    }
+    const uu=new upgrade(mobile,request);
+    uu.save().then(ress=>{
+        res.status(201).json({status:1,msg:"Requested the admin to elevate your status"});
+    }).catch(err=>{
+        console.log(err);
+        if(err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.checkProfilestatus=(req,res,next)=>{
+    const mobile=req.body.mobile;
+    if(!mobile)
+    {
+        const error=new Error("invalid request");
+        error.statusCode=200;
+        throw error;
+    }
+    upgrade.check(mobile).then(result=>{
+        res.status(201).json({status:1,data:result[0]});
+    }).catch(err=>{
+        console.log(err);
+        if(err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
 }
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filePath);

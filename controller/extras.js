@@ -39,6 +39,7 @@ exports.addHistory=(req,res,next)=>{
     }
     const his=new history(mobile,title,description)
     his.save().then(result=>{
+      //  console.warn("you accessed me");
         res.status(201).json({status:1,msg:"History recorded"});
     }).catch(err=>{
         console.log(err);

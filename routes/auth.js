@@ -77,5 +77,7 @@ router.post('/gettopreport',controlauth.getTopReports);
 router.post('/getQR',controlauth.qrScanner);
 //to get the level of the user
 router.post('/getLevel',controlauth.getLevel);
-
+//routes to upgrade your profile
+router.post('/upgradeP',controlauth.upgradeProfile);
+router.post('/checkStatus',controlauth.checkProfilestatus);
 module.exports=router;

@@ -1,7 +1,7 @@
 const db = require('../util/database');
 
 module.exports = class Report {
-    constructor(title, observer, details, date, link, type, mobile) {
+    constructor(title, observer, details, date, link, type, mobile,category) {
         this.title = title;
         this.observer = observer;
         this.details = details;
@@ -9,9 +9,10 @@ module.exports = class Report {
         this.link = link;
         this.type = type;
         this.mobile = mobile;
+        this.category=category;
     }
     save() {
-        return db.execute('INSERT INTO reports (title,observer,details,date,link,type,mobile) VALUES (?,?,?,?,?,?,?)', [this.title, this.observer, this.details, this.date, this.link, this.type, this.mobile]);
+        return db.execute('INSERT INTO reports (title,observer,details,date,link,type,mobile,category) VALUES (?,?,?,?,?,?,?,?)', [this.title, this.observer, this.details, this.date, this.link, this.type, this.mobile,this.category]);
     }
     static deleteReport(id)
     {

@@ -4,6 +4,16 @@ const db=require('./util/database');
 const auth=require('./routes/auth');
 const path=require('path');
 const multer=require('multer');
+//trying winston console logger 
+//this is just a simple implementation which will console log logs
+const winston=require('winston');
+const consoleTransport=new winston.transports.Console();
+const myWinstonOptions={
+    transports:[consoleTransport]
+}
+const logger=new winston.createLogger(myWinstonOptions);
+//decalrations of logger till here
+
 const { uuidv4 } = require('uuid');
 const app=express();
 
@@ -32,6 +42,19 @@ const fileFilter2=(req,file,cb)=>{
            cb(null,false);
        }
 }
+
+function logReq(req,res,next)
+{
+    logger.info(req.url);
+    next();
+}
+app.use(logReq);
+function logErr(req,res,next)
+{
+    logger.error(req.url);
+    next();
+}
+app.use(logErr);
 
 //to overcome the  PayloadTooLargeError: request entity too large
 app.use(express.json({limit: '50mb'}));
