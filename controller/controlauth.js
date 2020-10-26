@@ -7,6 +7,7 @@ const dieseas = require('../models/dieseas');
 const medicine = require('../models/medicine');
 const allergy = require('../models/allergy');
 const upgrade=require('../models/upgrade');
+const notification=require('../models/notification');
 const fs = require('fs');
 const path = require('path');
 const { validationResult } = require('express-validator/check');
@@ -158,6 +159,11 @@ exports.addPrescription = (req, res, next) => {
         throw error;
     }
     prescription.saveIt(mobile, title, date, image, doctor, observation).then(result => {
+        t1 = "Prescription added " + title;
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A prescription was added on " + dd+" with observer name "+doctor;
+        addNotification(t1, c1, mobile);
         res.status(201).json({
             status: 1,
             msg: "Prescription Uploaded Successfully"
@@ -219,6 +225,11 @@ exports.addReport = (req, res, next) => {
     console.log(title + " " + observer + " " + detail + " " + date + " " + fileName + " " + typeF + " " + mobile+" "+category);
     const entry = new report(title, observer, detail, date, fileName, typeF, mobile,category);
     entry.save().then(result => {
+        t1 = "Report added " + title;
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A report was added on " + dd+" with observer name "+observer;
+        addNotification(t1, c1, mobile);
         res.status(201).json({ status: 1, msg: 'Report inserted successfully' });
     }).catch(err => {
         console.log(err);
@@ -402,6 +413,11 @@ exports.updateProfile = (req, res, next) => {
         throw err;
     }
     user.updateProfile(mobile, name, height, weight, dob, blood).then(result => {
+        t1 = "Profile Updated ";
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A profile was updated on " + dd;
+        addNotification(t1, c1, mobile);
         res.status(201).json({ status: 1, msg: "Profile updated successfully" });
     }).catch(err => {
         console.log(err);
@@ -434,6 +450,11 @@ exports.updateEmergency = (req, res, next) => {
     }
     const rec_id = req.body.rec_id;
     emergency.updateEmergency(rec_id, name, phone).then(result => {
+        t1 = "Emergency Contacts Updated ";
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A emergency contacts was updated on " + dd;
+        addNotification(t1, c1, mobile);
         res.status(201).json({ status: 1, msg: "Emergency Contact updated" });
     }).catch(err => {
         console.log(err);
@@ -512,6 +533,11 @@ exports.qrScanner = (req, res, next) => {
             all=alls[0];
             return emergency.getEmergencyContacts(mobile);
         }).then(emer=>{
+            t1 = "Qr Scanned ";
+            var date2 = new Date();
+            let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+            c1 = "Your Qr Code was scanned " + dd;
+            addNotification(t1, c1, mobile);
             res.status(201).json({ status: 1, profile: pf, reports: re, precriptions: pre,emergency:emer[0],medicine:med,dieseas:die,allergy:all,history:his });
         }).catch(err => {
             console.log(err);
@@ -538,6 +564,11 @@ exports.qrScanner = (req, res, next) => {
             return dieseas.getDieseasByMobile(mobile);
         }).then(dis=>{
             die=dis[0];
+            t1 = "Qr Scanned ";
+            var date2 = new Date();
+            let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+            c1 = "Your Qr Code was scanned " + dd;
+            addNotification(t1, c1, mobile);
             res.status(201).json({ status: 2, profile:pf,emergency:eme,dieseas:die,allergy:all,medicines:med});
         }).catch(err=>{
             console.log(err);
@@ -554,8 +585,9 @@ exports.qrScanner = (req, res, next) => {
 }
 exports.deletePres=(req,res,next)=>{
     let id=req.body.id;
+    const mobile=req.body.mobile;
     let files=req.body.path;
-    if(!id||!files)
+    if(!id||!files||!mobile)
     {
         const err=new Error("Invalid Request");
         err.statusCode=200;
@@ -587,11 +619,17 @@ exports.deletePres=(req,res,next)=>{
             next(err);
         })
         }
+        t1 = "Report deleted ";
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A report was deleted on " + dd;
+        addNotification(t1, c1, mobile);
         res.status(201).json({status:1,msg:"All marked prescriptions deleted"});
     }
 }
 exports.deleteReports=(req,res,next)=>{
     let id=req.body.id;
+    const mobile=req.body.mobile;
     let files=req.body.path;
     console.log(files);
     if(!id||!files)
@@ -626,6 +664,11 @@ exports.deleteReports=(req,res,next)=>{
             next(err);
         })
         }
+        t1 = "Prescription deleted ";
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A prescription was deleted on " + dd;
+        addNotification(t1, c1, mobile);
         res.status(201).json({status:1,msg:"All marked prescriptions deleted"});
     }
 }
@@ -672,4 +715,14 @@ exports.checkProfilestatus=(req,res,next)=>{
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filePath);
     fs.unlink(filePath, err => { console.log(err) });
+}
+function addNotification(title, content, mobile) {
+    var date = new Date();
+    let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    const N = new notification(mobile, title, content, dd);
+    N.save().then(res => {
+        console.log("Notification added successfully");
+    }).catch(err => {
+        console.log(err);
+    });
 }

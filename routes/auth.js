@@ -80,4 +80,6 @@ router.post('/getLevel',controlauth.getLevel);
 //routes to upgrade your profile
 router.post('/upgradeP',controlauth.upgradeProfile);
 router.post('/checkStatus',controlauth.checkProfilestatus);
+//route to get inner notifications
+router.post('/notification',extras.getNotification);
 module.exports=router;
