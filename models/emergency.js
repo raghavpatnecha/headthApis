@@ -15,9 +15,9 @@ module.exports= class Emergency{
     {
         return db.execute('SELECT phone,name,rec_id FROM emergency WHERE mobile=(?)',[mobile]);
     }
-    static updateEmergency(rec_id,name,phone)
+    static updateEmergency(rec_id,name,phone,mobile)
     {
-        return db.execute('UPDATE emergency SET name=(?),phone=(?) WHERE rec_id=(?)',[name,phone,rec_id]);
+        return db.execute('UPDATE emergency SET name=(?),phone=(?),mobile=(?) WHERE rec_id=(?)',[name,phone,mobile,rec_id]);
     }
     
 }

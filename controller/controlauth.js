@@ -429,16 +429,13 @@ exports.updateProfile = (req, res, next) => {
 }
 exports.updateEmergency = (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty) {
-        console.log("Error detected");
-        const error = new Error('Some Errors are their');
-        error.statusCode = 200;
-        error.data = errors.array
-        throw error;
-    }
+    
     const name = req.body.name;
     const phone = req.body.phone;
-    if (!name || !phone) {
+    const rec_id = req.body.rec_id;
+    const mobile=req.body.mobile;
+    console.log(name," ",phone," ",rec_id , " ",mobile);
+    if (!name || !phone || !rec_id|| !mobile) {
         const err = new Error("Invalid data");
         err.statusCode = 200;
         throw err;
@@ -448,8 +445,7 @@ exports.updateEmergency = (req, res, next) => {
         error.statusCode = 200;
         throw error;
     }
-    const rec_id = req.body.rec_id;
-    emergency.updateEmergency(rec_id, name, phone).then(result => {
+    emergency.updateEmergency(rec_id, name, phone,mobile).then(result => {
         t1 = "Emergency Contacts Updated ";
         var date2 = new Date();
         let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
