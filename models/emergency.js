@@ -19,5 +19,8 @@ module.exports= class Emergency{
     {
         return db.execute('UPDATE emergency SET name=(?),phone=(?),mobile=(?) WHERE rec_id=(?)',[name,phone,mobile,rec_id]);
     }
-    
+    static checkExistence(mobile)
+    {
+        return db.execute('SELECT COUNT(phone) AS god FROM emergency WHERE phone=(?)',[mobile]);
+    }
 }

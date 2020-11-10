@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Verified</title>
+  <style>
+      img{
+          height:300px;
+          width: 300px;
+      }
+  </style>  
+</head>
+  <body>
+    <h2 id="base"><%= url %></h2>
+    <img  src="" id="img" alt="">
+    <script>
+      let s="<%= url %>";
+      let img=document.getElementById('img');
+      var base = document.getElementById("base");
+      var ll = location.protocol;
+      var slashes = ll.concat("//");
+      var host = slashes.concat(window.location.hostname);
+      base.innerHTML = host+":5000/"+s;
+      img.src=host+":5000/"+s;
+    </script>
+  </body>
+</html>

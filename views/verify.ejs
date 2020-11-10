@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifying your Identity</title>
+<style>
+    body{
+        background-color: aqua;
+    }
+</style>
+</head>
+<body>
+<form action="/app1/confirm" method="post">
+<input type="number" name="number" id="number" required maxlength="10" minlength="10">
+<input type="hidden" name="url" value="<%= url %>">
+<input type="hidden" name="mobile" value="<%= mobile %>">
+<button type="submit">Verify YourSelf</button>
+</form>
+</body>
+</html>

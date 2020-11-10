@@ -60,6 +60,8 @@ app.use(logErr);
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
 app.use(bodyParser.json());
+app.set('view engine','ejs');
+app.set('views','views');
 
 //console.log(limit);
 //registering multer to store images

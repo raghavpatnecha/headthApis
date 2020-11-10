@@ -82,4 +82,8 @@ router.post('/upgradeP',controlauth.upgradeProfile);
 router.post('/checkStatus',controlauth.checkProfilestatus);
 //route to get inner notifications
 router.post('/notification',extras.getNotification);
+//urls to enable share option
+router.get('/checkShare',extras.checkRequest);
+router.post('/confirm',extras.confirmCheck);
+
 module.exports=router;

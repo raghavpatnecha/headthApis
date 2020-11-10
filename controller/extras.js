@@ -3,6 +3,7 @@ const dieseas = require('../models/dieseas');
 const medicine = require('../models/medicine');
 const allergy = require('../models/allergy');
 const al2 = require('../models/allergy');
+const emergency=require('../models/emergency');
 const notification = require('../models/notification');
 const bcrypt = require('bcryptjs');
 
@@ -420,6 +421,56 @@ exports.getNotification = (req, res, next) => {
         console.log(err);
         if (!err.statusCode) {
             err.statusCode = 200;
+        }
+        next(err);
+    })
+}
+exports.checkRequest=(req,res,next)=>{
+    //method of extracting a query parameter from a get request
+    const url=req.query.url;
+    const mobile=req.query.mobile;
+    if(!url)
+    {
+        const err=new Error('Invalid request');
+        err.statusCode(200);
+        throw err;
+    }
+    console.log(url);
+    res.render('verify',{url:url,mobile:mobile});
+}
+exports.confirmCheck=(req,res,next)=>{
+    const phone=req.body.number;
+    const url=req.body.url;
+    const mobile=req.body.mobile;
+    console.log(phone,url,mobile);
+    if(!phone||!url||!mobile)
+    {
+        const err=new Error("Invalid Request..");
+        err.statusCode=200;
+        throw err;
+    }
+    emergency.checkExistence(phone).then(result=>{
+        let num=result[0];
+        num=num[0];
+        num=num.god;
+        console.log(num);
+        if(num>0)
+        {
+        t1 = "Your Document was viewed";
+        var date = new Date();
+        let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+        c1 = "One of your document was viewed by:- " + phone +" on "+dd;
+        addNotification(t1, c1, mobile);
+        res.render('confirm',{url:url});
+        }
+        else{
+            res.render('fail');
+        }
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
         }
         next(err);
     })
