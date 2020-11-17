@@ -6,16 +6,51 @@
     <title>Verifying your Identity</title>
 <style>
     body{
-        background-color: aqua;
+        background-color: rgb(5, 24, 24);
+    
+    }
+    .container{
+        align-content: center;
+        text-align: center;
+        margin: auto 0;
+    }
+    .container h1{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: #2556dd;
+    }
+    input{
+        height: 30px;
+        width: 420px;
+        font-size: 20px;
+        color: #000;
+        margin-bottom: 20px;
+        background-color: #857f7fea;
+        border-radius: 5px;
+        border: 0.2px solid rgb(9, 15, 109);
+    }
+    button{
+        height: 40px;
+        width: 100px;
+        color: #fff;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 0.2px solid #f8f7f5;
+        background-color: #fa8908;
+    }
+    #btn :hover{
+        border: 0.2px solid #f8f7f5;
+        background-color: #4908fa;     
     }
 </style>
 </head>
 <body>
-<form action="/app1/confirm" method="post">
-<input type="number" name="number" id="number" required maxlength="10" minlength="10">
+    <div class="container"><form action="/app1/confirm" method="post">
+        <h1>Please Verify Your Identity by giving your Mobile number</h1>
+<input type="number" name="number" id="number" required maxlength="10" minlength="10"><br>
 <input type="hidden" name="url" value="<%= url %>">
 <input type="hidden" name="mobile" value="<%= mobile %>">
-<button type="submit">Verify YourSelf</button>
+<button id="btn" type="submit">Verify YourSelf</button>
 </form>
+</div>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+    <div class="container">
+            <form action="/admin/confirm" method="post">
+                <div class="incontainer">              
+                    <h1>Login Form</h1>
+                    
+                    <label for="username"><b>Email</b></label><br> 
+                    <input type="text" name="username"  id="username" placeholder="Username" required>
+                    <br>
+                    <label for="password"><b>Enter Password</b></label><br>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <button type="submit"class="registerbtn" >Login</button>
+                </div>
+                <div class="incontainer signin">
+                   <p> Forgot Your Password <a href="/admin/register">Reset It</a></p>
+                </div> 
+            </form>
+            <div class="incontainer signin">
+               <p> Do not have a account <a href="/admin/register">Register</a></p>
+            </div> 
+    </div>
+</body>
+</html>

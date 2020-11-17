@@ -1,0 +1,70 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(20, 155, 209);
+}
+.incontainer{
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    box-shadow: 1px 1px black;
+    align-items: center;
+    border-radius: 25px;
+}
+input[type=text],input[type=password]{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+}
+input[type=text],input[type=password]{
+    background-color: #ddd;
+    outline: none;
+}
+hr{
+    border: 1px solid #f1f1f1;
+    margin-bottom: 15px;
+}
+h1{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.registerbtn{
+    background-color: rgb(20, 155, 209);
+    color: azure;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 20px;
+    opacity: 0.9;
+}
+.registerbtn:hover{
+    opacity: 1;
+}
+a{
+    color: dodgerblue;
+}
+.signin{
+    background-color: #f1f1f1;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 30px;
+    align-self: center;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    position:relative;
+    align-content: center;
+    width: 100%;
+}

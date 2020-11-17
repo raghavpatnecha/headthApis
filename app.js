@@ -2,6 +2,7 @@ const express=require('express');
 const bodyParser=require('body-parser');
 const db=require('./util/database');
 const auth=require('./routes/auth');
+const admin=require('./routes/admin');
 const path=require('path');
 const multer=require('multer');
 //trying winston console logger 
@@ -86,6 +87,7 @@ app.use((req,res,next)=>{
 });
 
 app.use('/app1',auth);
+app.use('/admin',admin);
 
 app.use((error,req,res,next)=>{
     console.log(error);
