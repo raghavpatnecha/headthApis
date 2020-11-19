@@ -11,6 +11,8 @@ router.get('/controller',admincontroller.welcome);
 
 router.get('/register',admincontroller.register);
 
+router.post('/logout',admincontroller.logout);
+
 router.post('/newCompany',admincontroller.doRegister);
 
 module.exports=router;

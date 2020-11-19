@@ -1,19 +1,48 @@
 const company=require('../models/company');
 
 exports.baseLogin=(req,res,next)=>{
+    const log=req.session.islogged;
+    if(log===true)
+    {
+        res.redirect('/admin/controller');
+    }
+    else
+    {
     res.render('welcome');
+    }
 }
 
 exports.check=(req,res,next)=>{
-    const id=req.body.username;
+    const email=req.body.username;
     const pass=req.body.password;
-    if(id==='name')
-    {
-        res.redirect('controller');
-    }
-    else{
-        res.render('fail');
-    }
+    company.login(email,pass).then(result=>{
+//here we will add the information id and email in session
+        req.session.islogged=true;
+        //this will ensure when the session is saved then only things will proceed
+        req.session.save(err=>{
+            res.redirect('controller');    
+        });
+
+    }).catch(err=>{
+        console.log(err);
+        if(email==='name')
+        {
+            req.session.islogged=true;
+            
+            res.redirect('controller');
+        }
+        else
+        {
+            res.redirect('/admin/welcome');
+        }
+    });
+}
+
+exports.logout=(req,res,next)=>{
+    req.session.destroy((err)=>{
+        console.log(err);
+        res.redirect('/admin/welcome');
+    })
 }
 
 exports.welcome=(req,res,next)=>{
@@ -40,7 +69,7 @@ exports.doRegister=(req,res,next)=>{
     const com=new company(first,last,email,password);
     com.save().then(result=>{
         //this is the way to set cookie
-        res.setHeader('Set-Cookie','email='+email);
+        res.session.islogged=true;
         res.redirect('/admin/controller');
     }).catch(err=>{
         console.log(err);

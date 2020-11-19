@@ -258,3 +258,7 @@
 .rtype > img{
     border-radius: 10px;
 }
+.sim{
+    text-decoration: none;
+    border: none;
+}

@@ -5,6 +5,18 @@ const auth=require('./routes/auth');
 const admin=require('./routes/admin');
 const path=require('path');
 const multer=require('multer');
+//importing session package
+const session=require('express-session');
+//importing mysql-session package
+const exp_mysql_sess=require('express-mysql-session')(session);
+var options={
+    host:'localhost',
+    user:'root',
+    database:'headth2',
+    password:'',
+    port:3306
+}
+var sessionStore=new exp_mysql_sess(options);
 //trying winston console logger 
 //this is just a simple implementation which will console log logs
 const winston=require('winston');
@@ -61,6 +73,8 @@ app.use(logErr);
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
 app.use(bodyParser.json());
+//initiating the session middleware in line 65
+app.use(session({secret:'HareKrishna',resave:false,saveUninitialized:false,store:sessionStore}));
 app.set('view engine','ejs');
 app.set('views','views');
 
