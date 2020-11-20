@@ -12,8 +12,12 @@ module.exports=class Company{
     {
         return db.execute('INSERT INTO company (email,password,first,last) VALUES (?,?,?,?)',[this.email,this.password,this.first,this.last]);
     }
-    static login(email,password)
+    static login(email)
     {
-        return db.execute('SELECT * FROM company WHERE email=(?) AND password=(?)',[email,password]);
+        return db.execute('SELECT * FROM company WHERE email=(?)',[email]);
+    }
+    static check(email)
+    {
+        return db.execute('SELECT COUNT(email) AS num FROM company WHERE email=(?)',[email]);
     }
 }
