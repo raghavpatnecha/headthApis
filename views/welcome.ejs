@@ -10,8 +10,10 @@
     <div class="container">
             <form action="/admin/confirm" method="post">
                 <div class="incontainer">              
+                    <% if(msg){ %>
+                        <div><%= msg %> </div>
+                    <% } %> 
                     <h1>Login Form</h1>
-                    
                     <label for="username"><b>Email</b></label><br> 
                     <input type="text" name="username"  id="username" placeholder="Username" required>
                     <br>

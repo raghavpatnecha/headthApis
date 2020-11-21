@@ -9,6 +9,9 @@ const multer=require('multer');
 const session=require('express-session');
 //importing mysql-session package
 const exp_mysql_sess=require('express-mysql-session')(session);
+const csrf=require('csurf');
+const flash=require('connect-flash');
+
 var options={
     host:'localhost',
     user:'root',
@@ -26,6 +29,8 @@ const myWinstonOptions={
 }
 const logger=new winston.createLogger(myWinstonOptions);
 //decalrations of logger till here
+
+const csrfProtection=csrf();
 
 const { uuidv4 } = require('uuid');
 const app=express();
@@ -75,6 +80,10 @@ app.use(express.urlencoded({limit: '50mb',extended:true}));
 app.use(bodyParser.json());
 //initiating the session middleware in line 65
 app.use(session({secret:'HareKrishna',resave:false,saveUninitialized:false,store:sessionStore}));
+//uncomment this line if u want to use csrf protection
+// app.use(csrfProtection);
+app.use(flash());
+
 app.set('view engine','ejs');
 app.set('views','views');
 
@@ -99,6 +108,12 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
     next();
 });
+
+//to add csrf everywhere
+// app.use((req,res,next)=>{
+//     res.locals.csrfToken=req.csrfToken();
+//     next();
+// });
 
 app.use('/app1',auth);
 app.use('/admin',admin);
