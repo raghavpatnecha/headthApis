@@ -17,6 +17,13 @@ router.post('/logout',isAuth,admincontroller.logout);
 
 router.post('/newCompany',admincontroller.doRegister);
 
-//csrf=cross site request forgery
+router.get('/change',admincontroller.change);
 
+router.post('/changePassword',admincontroller.resetPassword);
+//csrf=cross site request forgery
+//this route is used to reset the password of the token generated and is valid for 1 hour
+router.get('/:token',admincontroller.confirmChange);
+
+router.post('/confirmChange',admincontroller.finalChange);
 module.exports=router;
+

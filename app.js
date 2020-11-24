@@ -114,7 +114,7 @@ app.use((req,res,next)=>{
 //     res.locals.csrfToken=req.csrfToken();
 //     next();
 // });
-
+console.log(Date.now());
 app.use('/app1',auth);
 app.use('/admin',admin);
 

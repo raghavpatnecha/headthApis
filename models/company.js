@@ -20,4 +20,8 @@ module.exports=class Company{
     {
         return db.execute('SELECT COUNT(email) AS num FROM company WHERE email=(?)',[email]);
     }
+    static alterPass(email,password)
+    {
+        return db.execute('UPDATE company SET password=(?) WHERE email=(?)',[password,email]);
+    }
 }
