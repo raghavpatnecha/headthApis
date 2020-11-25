@@ -23,7 +23,7 @@ input[type=text],input[type=password]{
     border-radius: 20px;
     background-color: #f1f1f1;
 }
-input[type=text],input[type=password]{
+input[type=text],input[type=password],input[type=email]{
     background-color: #ddd;
     outline: none;
 }

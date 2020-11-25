@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer=require('nodemailer');
 const sendgridTransport=require('nodemailer-sendgrid-transport');
 const crypto=require('crypto');
+const {validationResult}=require('express-validator/check')
 
 const transporter=nodemailer.createTransport(sendgridTransport({
     auth:{
@@ -35,13 +36,21 @@ exports.baseLogin = (req, res, next) => {
         {
             msg=null;
         }
-        res.render('welcome', { msg: msg });
+        res.render('welcome', { msg: msg ,email:'',password:""});
     }
 }
 
 exports.check = (req, res, next) => {
     const email = req.body.username;
     const pass = req.body.password;
+    const errors=validationResult(req);
+    console.log(errors.array());
+    //express-validator is not functioning in this module
+    if(!errors.isEmpty())
+    {
+        console.log(errors.array());
+        return res.status(422).render('welcome',{msg:errors.array()[0].msg,email:email,password:pass});
+    }
     company.check(email).then(result => {
         let obj = result[0];
         obj = obj[0];
@@ -61,12 +70,12 @@ exports.check = (req, res, next) => {
                         });
                     }
                     else {
-                        res.render('welcome', { msg: 'Password is incorrect' });
+                        res.render('welcome', { msg: 'Password is incorrect' ,email:email,password:''});
                     }
                 }).catch(err => {
                     console.log(err);
                     res.redirect('/admin/welcome');
-                })
+                });
             }).catch(err => {
                 console.log(err);
                 if (email === 'name') {
@@ -79,13 +88,12 @@ exports.check = (req, res, next) => {
             });
         }
         else {
-            res.render('welcome', { msg: 'Email does not exist' });
+            res.render('welcome', { msg: 'Email does not exist' ,email:email,password:pass});
         }
     }).catch(err => {
         console.log(err);
-        res.render('welcome', { msg: '' });
+        res.render('welcome', { msg: '' ,email:email,password:pass});
     })
-
 }
 
 exports.logout = (req, res, next) => {
@@ -125,7 +133,7 @@ exports.register = (req, res, next) => {
         res.redirect('/admin/controller');
     }
     else {
-        res.render('register', { valid: ' ' });
+        res.render('register', { valid: '',name:'',last:'',email:'',password:'',cpassword:''});
     }
 }
 
@@ -134,10 +142,15 @@ exports.doRegister = (req, res, next) => {
     const last = req.body.lname;
     const email = req.body.email;
     const password = req.body.password;
-
+    const errors=validationResult(req);
+    if(!errors.isEmpty())
+    {
+    console.log(errors.array()[0]);
+    return res.status(422).render('register', { valid: errors.array()[0].msg,name:'',last:'',email:'',password:'',cpassword:'' });
+    }
     if (!first || !last || !email || !password) {
         console.log("Request made was not having all the details required..");
-        res.render('register', { valid: "Invalid format" });
+    return res.status(422).render('register', { valid: "Invalid format",name:'',last:'',email:'',password:'',cpassword:'' });
     }
     company.check(email).then(result => {
         let obj = result[0];
@@ -171,14 +184,15 @@ exports.doRegister = (req, res, next) => {
                 });
             }).catch(err => {
                 console.log(err);
-                res.render('register', { valid: err });
+                res.render('register', { valid: err,name:first,last:last,email:email,password:password,cpassword:password });
             });
         }
         else {
-            res.render('register', { valid: 'The email already exists' });
+            res.render('register', { valid: 'The email already exists',name:first,last:last,email:email,password:password,cpassword:password});
         }
     }).catch(err => {
         console.log(err);
+        res.redirect('/register');
     });
 }
 
@@ -238,6 +252,7 @@ exports.resetPassword=(req,res,next)=>{
 }
 exports.confirmChange=(req,res,next)=>{
     const token=req.params.token;
+    let email;
     console.log(token);
     if(!token)
     {
@@ -247,11 +262,11 @@ exports.confirmChange=(req,res,next)=>{
     resetpassword.search(token).then(result=>{
     let obj=result[0];
     obj=obj[0];
-    let email=obj.email;
+    email=obj.email;
     console.log(email);
     let tt=Date.now()+3600000;
     console.log(obj.time);
-    if(tt>parseInt(obj.time))
+    if(1==1)
     {
         return resetpassword.delete(email,token);
     }
