@@ -98,7 +98,7 @@ exports.check = (req, res, next) => {
 
 exports.logout = (req, res, next) => {
     const log = req.session.islogged;
-    if (log === true) {
+    if (log == true) {
         req.flash('error', 'Logout operation successfull');
         req.session.destroy((err) => {
             console.log(err);
@@ -111,7 +111,7 @@ exports.logout = (req, res, next) => {
 }
 
 exports.change=(req,res,next)=>{
-    res.render('change');
+    res.render('change',{msg:''});
 }
 
 exports.welcome = (req, res, next) => {
@@ -198,6 +198,12 @@ exports.doRegister = (req, res, next) => {
 
 exports.resetPassword=(req,res,next)=>{
     const email=req.body.email;
+    const error=validationResult(req);
+    if(!error.isEmpty())
+    {
+        console.log(error.array()[0].msg);
+        return res.render('change',{msg:error.array()[0].msg});
+    }
     if(!email)
     {
         console.log('Email is required');
@@ -238,7 +244,7 @@ exports.resetPassword=(req,res,next)=>{
                 }).catch(err=>{
                     console.log(err);
                 });
-                res.redirect('/admin/welcome');    
+               // res.redirect('/admin/welcome');    
             }
             else
             {
@@ -274,7 +280,7 @@ exports.confirmChange=(req,res,next)=>{
         res.render('<h1>Token expired please generate the request again</h1>');
     }
     }).then(rr=>{
-        res.render('confirmChange',{email:email});
+        res.render('confirmChange',{email:email,msg:''});
     }).catch(err=>{
         console.log(err);
         res.render('notoken');
@@ -283,11 +289,18 @@ exports.confirmChange=(req,res,next)=>{
 }
 exports.finalChange=(req,res,next)=>{
     const email=req.body.email;
+    const cpassword=req.body.cpassword;
     const password=req.body.password;
+    console.log(email);
+    const error=validationResult(req);
+    if(!error.isEmpty())
+    {
+        return res.render('confirmChange',{email:email,msg:error.array()[0].msg});
+    }
     if(!email||!password)
     {
-        res.render('fail');
         console.log("invalid request made");
+        return res.render('fail');
     }
     bcrypt.hash(password,12).then(cryp=>{
         return company.alterPass(email,cryp);
@@ -299,4 +312,8 @@ exports.finalChange=(req,res,next)=>{
         console.log(err);
         res.redirect('/admin/welcome');
     });
+}
+
+exports.summary=(req,res,next)=>{
+    res.render('summary');
 }

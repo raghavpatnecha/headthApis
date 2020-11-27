@@ -1,36 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome School Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/layout1.css">
-</head>
+<%- include('./base/head.ejs') %> 
 <body>
     <div class="container">
         <!-- side menu -->
-        <div class="side">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH-R2WtNAagBzCLZQfVeHd46asJXM1HNay6w&usqp=CAU" class="img" alt="">
-            <div class="name">Lorem ipsum dolor sit.</div>
-            <div class="item"><a href="#">Home</a></div>
-            <div class="item"><a href="#">Home</a></div>
-            <div class="item"><a href="#">Home</a></div>
-            <div class="item"><a href="#">Home</a></div>
-            <div class="item"><a href="#"><form action="/admin/logout" method="post">
-            <button type="submit" class="sim">Logout</button>
-            </form></a></div>
-            
-        </div>
+        <%- include('./base/side.ejs') %> 
         <!-- main menu -->
         <div class="main">
         <!-- search bar -->
-        <div class="search">
-            <form action="/admin/searchRandom" method="get">
-            <input type="text" name="search" placeholder="Search" id="search">
-            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
+        <%- include('./base/search.ejs') %> 
         <!-- classwise content -->
         <div class="student">
             <div class="info">

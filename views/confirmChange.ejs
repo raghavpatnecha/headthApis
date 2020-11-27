@@ -10,6 +10,9 @@
     <div class="container">
         <form action="/admin/confirmChange" method="post">
           <div class="incontainer">
+            <% if(msg) {%>
+              <div><%= msg %> </div>
+            <% } %>
             <h1>Confirm change password bu supplying a password</h1>
             <!-- this is a way to add csrf token -->
             <!-- <input type="hidden" name="_csrf" value=" "> -->

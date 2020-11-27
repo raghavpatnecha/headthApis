@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <form action="/admin/changePassword" method="post">
+        <form action="/admin/change" method="post">
           <div class="incontainer">
+            <% if(msg) {%>
+              <div><%= msg %> </div>
+            <% } %>    
             <h1>Request for change Password please enter your email</h1>
             <br />
             <label for="email"><b> Email</b></label><br>
