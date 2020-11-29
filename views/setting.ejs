@@ -1,0 +1,31 @@
+<%- include('./base/head.ejs') %> 
+<body>
+    <div class="container">
+        <!-- side menu -->
+        <%- include('./base/side.ejs') %> 
+        <!-- main menu -->
+        <div class="main">
+        <!-- search bar -->
+        <%- include('./base/search.ejs') %> 
+        <!-- classwise content -->
+        <div class="student">
+          <div class="setting">
+              <form action="" method="post">
+                <br>  
+                <label for="email">Email</label>
+                  <input type="email" name="email" id="email">
+                  <br>
+                  <label for="icon">Company Icon</label>
+                  <input type="file" name="icon" id="icon">
+                  <br>
+                  <label for="summary">Summary</label>
+                  <textarea name="summary" id="summary" cols="30" rows="10"></textarea>
+                  <button type="submit">Modify Information</button>
+                </form>
+          </div>
+        </div>
+        </div>
+    </div>
+    <!-- footer -->
+</body>
+</html>

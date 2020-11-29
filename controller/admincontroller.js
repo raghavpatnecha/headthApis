@@ -317,3 +317,11 @@ exports.finalChange=(req,res,next)=>{
 exports.summary=(req,res,next)=>{
     res.render('summary');
 }
+
+exports.setting=(req,res,next)=>{
+    res.render('setting');
+}
+
+exports.get500=(req,res,next)=>{
+    res.render('error');
+}

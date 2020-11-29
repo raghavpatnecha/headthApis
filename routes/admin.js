@@ -14,6 +14,8 @@ router.get('/controller',isAuth,admincontroller.welcome);
 
 router.get('/summary',isAuth,admincontroller.summary);
 
+router.get('/setting',isAuth,admincontroller.setting);
+
 router.get('/register',admincontroller.register);
 
 router.get('/logout',isAuth,admincontroller.logout);
@@ -50,6 +52,8 @@ router.post('/confirmChange',[
         throw new Error("Passwords do not match");
     })
 ],admincontroller.finalChange);
+
+router.get(admincontroller.get500);
 
 module.exports=router;
 

@@ -117,7 +117,7 @@ app.use((req,res,next)=>{
 console.log(Date.now());
 app.use('/app1',auth);
 app.use('/admin',admin);
-
+//this is the special error handler mechanism in nodejs
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode;

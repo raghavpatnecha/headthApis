@@ -1,0 +1,28 @@
+.student2{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+}
+.summary{
+    flex:70%;
+    font-size: 16px;
+    background-color: #fff;
+    border-radius: 20px;
+    color: #000;
+    padding: 10px;
+    box-shadow: 1px 1px black;
+}
+.summary >h2{
+    color: rgb(36, 195, 195);
+    margin: 10px;
+    text-align: center;
+}
+.prog
+.sum-nav{
+    flex: 30%;
+    text-align: center;
+    box-shadow: 1px 1px black;
+    border-radius: 20px;
+}

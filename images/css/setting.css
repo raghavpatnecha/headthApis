@@ -1,0 +1,45 @@
+.setting{
+    width: 100%;
+    padding: 20px;
+    margin: 0px;
+    margin: 10px;
+    background-color: rgb(248, 244, 237);
+    border-radius: 20px;
+    border: 0.5px solid #fff;
+    box-shadow: 1px 1px rgb(19, 16, 16);
+}
+textarea{
+    width: 100%;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    background-color: rgb(247, 238, 238);
+    border: 1px solid rgb(231, 219, 219);
+}
+
+input[type=email],input[type=file]{
+    width: 100%;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    background-color: white;
+    border: 1px solid grey;
+}
+input[type=email],input[type=file]:active{
+    background-color: rgb(196, 182, 182);
+    border: 1px solid rgba(12, 81, 172, 0.836);
+}
+button{
+    background-color: rgb(20, 155, 209);
+    color: azure;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 20px;
+    opacity: 0.9;
+}
