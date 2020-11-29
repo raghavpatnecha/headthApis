@@ -1,4 +1,6 @@
 const company = require('../models/company');
+const company2 = require('../models/company2');
+
 const resetpassword=require('../models/resetpassword');
 const bcrypt = require('bcryptjs');
 //importing third party mailer support
@@ -319,9 +321,56 @@ exports.summary=(req,res,next)=>{
 }
 
 exports.setting=(req,res,next)=>{
-    res.render('setting');
+    let email=req.session.email;
+    company2.check(email).then(result=>{
+        let count=result[0];
+        count=count[0];
+        if(count.c>0)
+        {
+            return company2.getInfo(email);
+        }
+        else
+        {
+            let newSum=new company2(email,"a basic summary","default");
+            newSum.save().then(rr=>{
+                return company2.getInfo(email);
+            }).catch(err=>{
+                console.log(err);
+                res.redirect('/admin/controller');
+            });
+        }
+    }).then(result=>{
+        let obj=result[0];
+        obj=obj[0];
+        let email=obj.email;
+        let summary=obj.summary;
+        let img=obj.img;
+        return res.render('setting',{email:email,summary:summary,img:img});
+    }).catch(err=>{
+        console.log(err);
+        res.redirect('/admin/controller');
+    });
 }
 
+exports.updateSetting=(req,res,next)=>{
+    const email=req.session.email;
+    const summary=req.body.summary;
+    const icon=req.body.icon;
+    company2.getInfo(email).then(result=>{
+        let obj=result[0];
+        obj=obj[0];
+        let summ=true;
+        if(summary===obj[0].summary)
+        {
+            console.log("summary is same");
+            summ=false;
+        }
+        
+    }).catch(err=>{
+        console.log(err);
+
+    })
+}
 exports.get500=(req,res,next)=>{
     res.render('error');
 }

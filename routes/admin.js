@@ -16,6 +16,8 @@ router.get('/summary',isAuth,admincontroller.summary);
 
 router.get('/setting',isAuth,admincontroller.setting);
 
+router.post('/setting',isAuth,admincontroller.updateSetting);
+
 router.get('/register',admincontroller.register);
 
 router.get('/logout',isAuth,admincontroller.logout);
