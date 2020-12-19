@@ -356,6 +356,8 @@ exports.updateSetting=(req,res,next)=>{
     const email=req.session.email;
     const summary=req.body.summary;
     const icon=req.body.icon;
+    const file=req.file;
+    console.log(file);
     company2.getInfo(email).then(result=>{
         let obj=result[0];
         obj=obj[0];
