@@ -10,7 +10,7 @@ const upgrade=require('../models/upgrade');
 const notification=require('../models/notification');
 const fs = require('fs');
 const path = require('path');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 //this bcrypt library is used to hash the password
 const bcrypt = require('bcryptjs');
 const mime = require('mime');

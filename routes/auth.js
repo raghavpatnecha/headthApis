@@ -1,5 +1,5 @@
 const express=require('express');
-const {body}=require('express-validator/check');
+const {body}=require('express-validator');
 const controlauth=require('../controller/controlauth');
 const extras=require('../controller/extras');
 

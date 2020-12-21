@@ -2,7 +2,7 @@ const express=require('express');
 const admincontroller=require('../controller/admincontroller');
 //this checks if the user is logged in or not 
 const isAuth=require('../middleware/is-auth');
-const {check} =require('express-validator/check');
+const {check} =require('express-validator');
 
 const router=express();
 
