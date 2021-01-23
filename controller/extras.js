@@ -24,7 +24,7 @@ exports.addAllergy = (req, res, next) => {
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "A allergy was added on " + dd;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: "Allergy recorded" });
+        res.status(201).json({ status: 1, msg: "Record Added Successfully" });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {
@@ -50,7 +50,7 @@ exports.addHistory = (req, res, next) => {
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "A history was added on " + dd;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: "History recorded" });
+        res.status(201).json({ status: 1, msg: "Record Added Successfully" });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {
@@ -77,7 +77,7 @@ exports.addMedicine = (req, res, next) => {
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "A Medicine was added on " + dd + " .For the Duration of " + duration;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: "Medicine recorded" });
+        res.status(201).json({ status: 1, msg: "Record Added Successfully" });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {
@@ -103,7 +103,7 @@ exports.addDieseas = (req, res, next) => {
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "A dieseas was added on " + dd;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: "Dieseas recorded" });
+        res.status(201).json({ status: 1, msg: "Record Added Successfully" });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {
@@ -400,7 +400,7 @@ exports.deleteDieases = (req, res, next) => {
                 console.log(result);
             });
         }
-        t1 = "Dieseases deleted";
+        t1 = "Dieseas deleted";
         var date = new Date();
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "Item or Items in dieseases are deleted on: " + dd;
@@ -474,6 +474,43 @@ exports.confirmCheck=(req,res,next)=>{
         }
         next(err);
     })
+}
+exports.deleteNotification=(req,res,next)=>{
+    const id=req.body.id;
+    if(!id)
+    {
+        const err=new Error('Invalid Request');
+        err.statusCode=200;
+        throw err;
+    }
+    notification.deleteNotification(id).then(result=>{
+        res.status(201).json({status:1,msg:'Notification hidden successfully'});
+    }).catch(err=>{
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateNotification=(req,res,next)=>{
+    const id=req.body.id;
+    if(!id)
+    {
+        const err=new Error('Invalid Request');
+        err.statusCode=200;
+        throw err;
+    }
+    console.log(id);
+    notification.updateNotification(id).then(result=>{
+        res.status(201).json({status:1,msg:"Notification status updated successfully"});
+    }).catch(err=>{
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
 }
 function addNotification(title, content, mobile) {
     var date = new Date();

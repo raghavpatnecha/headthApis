@@ -460,6 +460,26 @@ exports.updateEmergency = (req, res, next) => {
         next(err);
     });
 }
+exports.deleteEmergency=(req,res,next)=>{
+    const rec_id=req.body.rec_id;
+    console.log("record id being deleted is :-",rec_id);
+    if(!rec_id)
+    {
+        const err=new Error("Invalid request");
+        err.statusCode=200;
+        throw err;
+    }
+    emergency.deleteEmergency(rec_id).then(result=>{
+        res.status(201).json({status:1,msg:'Emergency Contact Deleted'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
 exports.saveSingleEmergency = (req, res, next) => {
     const name = req.body.name;
     const phone = req.body.phone;
@@ -472,7 +492,10 @@ exports.saveSingleEmergency = (req, res, next) => {
     }
     const newemer = new emergency(mobile, name, phone);
     newemer.save().then(result => {
-        res.status(200).json({ status: 1, msg: 'record inserted' });
+        return emergency.getRecordId(phone);
+    }).then(result=>{
+        console.log(result);
+        res.status(200).json({ status: 1, msg: 'record inserted',rec_id:result[0] });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {

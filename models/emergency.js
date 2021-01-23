@@ -23,4 +23,12 @@ module.exports= class Emergency{
     {
         return db.execute('SELECT COUNT(phone) AS god FROM emergency WHERE phone=(?)',[mobile]);
     }
+    static deleteEmergency(rec_id)
+    {
+        return db.execute('DELETE FROM emergency WHERE rec_id=(?)',[rec_id]);
+    }
+    static getRecordId(phone)
+    {
+        return db.execute('SELECT rec_id FROM emergency WHERE phone=(?)',[phone]);
+    }
 }

@@ -15,4 +15,12 @@ module.exports=class Notification{
     {
         return db.execute('SELECT * FROM notification WHERE mobile=(?)',[mobile]);
     }
+    static deleteNotification(id)
+    {
+        return db.execute('DELETE FROM notification WHERE id=(?)',[id]);
+    }
+    static updateNotification(id)
+    {
+        return db.execute('UPDATE notification SET status="read" WHERE id=(?)',[id]);
+    }
 }
