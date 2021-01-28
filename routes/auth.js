@@ -89,5 +89,7 @@ router.get('/checkShare',extras.checkRequest);
 router.post('/confirm',extras.confirmCheck);
 
 router.post('/deleteEmergency',controlauth.deleteEmergency);
+//delete data from backend
+router.post('/deleteData',controlauth.deleteData);
 
 module.exports=router;

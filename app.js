@@ -15,8 +15,8 @@ const flash=require('connect-flash');
 var options={
     host:'localhost',
     user:'root',
-    database:'headth2',
-    password:'',
+    database:'headth',
+    password:'root',
     port:3306
 }
 var sessionStore=new exp_mysql_sess(options);
@@ -121,8 +121,21 @@ app.use('/admin',admin);
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode;
-    const message=error.message;
+    const message=error.message;    
     res.status(201).json({status:0, msg:message});
 })
 //CT20182428795
 app.listen(5000);
+//code to remove a file from a folder
+// const fs=require('fs');
+// const path2='./images/back.jpg';
+// fs.unlink(path2,(err)=>{
+//     if(err)
+//     {
+//         console.log(err);
+//         return;
+//     }
+//     else{
+//         console.log('File removed successfully');
+//     }
+// });

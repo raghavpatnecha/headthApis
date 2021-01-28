@@ -190,6 +190,36 @@ function decodeBase64Image(dataString) {
     response.data = new Buffer(matches[2], 'base64');
     return response;
 }
+exports.deleteData=(req,res,next)=>{
+    const file=req.body.file;
+    if(!file)
+    {
+        const err=new Error('Invalid request..');
+        err.statusCode=200;
+        throw err;
+    }
+    try{
+        fs.unlink('./images/'+file,(err)=>{
+            if(err)
+            {
+                console.log(err);
+                res.status(200).json({status:0,msg:"Image is not deleted"});
+            }
+            else
+            {
+                console.log("data is deleted");
+                res.status(201).json({status:1,msg:"data deletion successfull"});
+            }
+        })
+    }
+    catch(err)
+    {
+        console.log(err);
+        const error=new Error('Invalid and not working');
+        error.statusCode=422;
+        throw error;
+    }
+}
 exports.addReport = (req, res, next) => {
     const title = req.body.title;
     const observer = req.body.observer;
@@ -606,6 +636,7 @@ exports.deletePres=(req,res,next)=>{
     let id=req.body.id;
     const mobile=req.body.mobile;
     let files=req.body.path;
+    console.log(id," ",files);
     if(!id||!files||!mobile)
     {
         const err=new Error("Invalid Request");
@@ -625,8 +656,22 @@ exports.deletePres=(req,res,next)=>{
             let item=id[i];
             s=i;
         prescription.deletePres(item.id).then(result=>{
+
             let item_image=files[s];
-            return clearImage(item_image.path);
+            console.log(item_image.path);
+                fs.unlink('./images/'+item_image.path,(err)=>{
+                    if(err)
+                    {
+                        console.log(err);
+                        // res.status(200).json({status:0,msg:"Image is not deleted"});
+                    }
+                    else
+                    {
+                        console.log("data is deleted");
+                        // res.status(201).json({status:1,msg:"data deletion successfull"});
+                    }
+                })
+            // return clearImage(item_image.path);
         }).then(result=>{
             console.log("all ok image deleted");
         }).catch(err=>{
@@ -671,7 +716,19 @@ exports.deleteReports=(req,res,next)=>{
         report.deleteReport(item.id).then(result=>{
             s=i;
             let item_image=files[s];
-            return clearImage(item_image.path);
+                fs.unlink('./images/'+item_image.path,(err)=>{
+                    if(err)
+                    {
+                        console.log(err);
+                        // res.status(200).json({status:0,msg:"Image is not deleted"});
+                    }
+                    else
+                    {
+                        console.log("data is deleted");
+                        // res.status(201).json({status:1,msg:"data deletion successfull"});
+                    }
+                })
+            // return clearImage(item_image.path);
         }).then(result=>{
             console.log("all ok image deleted");
         }).catch(err=>{
@@ -690,6 +747,9 @@ exports.deleteReports=(req,res,next)=>{
         addNotification(t1, c1, mobile);
         res.status(201).json({status:1,msg:"All marked prescriptions deleted"});
     }
+}
+exports.updateReport=(req,res,next)=>{
+    
 }
 exports.upgradeProfile=(req,res,next)=>{
     const mobile=req.body.mobile;
