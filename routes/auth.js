@@ -91,5 +91,7 @@ router.post('/confirm',extras.confirmCheck);
 router.post('/deleteEmergency',controlauth.deleteEmergency);
 //delete data from backend
 router.post('/deleteData',controlauth.deleteData);
+//add images to backed in base64 from android
+router.post('/addImage64',controlauth.addImage64);
 
 module.exports=router;
