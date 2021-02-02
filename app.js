@@ -15,8 +15,8 @@ const flash=require('connect-flash');
 var options={
     host:'localhost',
     user:'root',
-    database:'headth2',
-    password:'',
+    database:'headth',
+    password:'root',
     port:3306
 }
 var sessionStore=new exp_mysql_sess(options);
