@@ -39,4 +39,8 @@ module.exports=class Prescription{
     {
         return db.execute('SELECT * FROM prescriptions WHERE mobile=(?) LIMIT 3',[mobile]);
     }
+    static updatePres(id,mobile,title,date,image,doctor,observation)
+    {
+        return db.execute('UPDATE prescriptions SET mobile=(?),title=(?),date=(?),image=(?),doctor=(?),observation=(?) WHERE id=(?)',[mobile,title,date,image,doctor,observation,id]);
+    }
 };

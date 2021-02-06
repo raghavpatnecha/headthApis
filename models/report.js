@@ -24,4 +24,8 @@ module.exports = class Report {
     static getReportTop(mobile) {
         return db.execute('SELECT * FROM reports WHERE mobile=(?) LIMIT 3', [mobile]);
     }
+    static updateReport(id,mobile,title,observer,details,date,link,type,category)
+    {
+        return db.execute('UPDATE reports SET mobile=(?),title=(?),observer=(?),details=(?),date=(?),link=(?),type=(?),category=(?) WHERE id=(?)',[mobile,title,observer,details,date,link,type,category,id]);
+    }
 };

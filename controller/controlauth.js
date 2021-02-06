@@ -304,18 +304,25 @@ exports.updatePrescription = (req, res, next) => {
     const doctor = req.body.doctor;
     const observation = req.body.observation;
     const image = req.body.image;
-    if (req.file) {
-        image = req.file.path;
-    }
-    if (!image) {
+    if (!image || !mobile || !id || !title || !date || !doctor || !observation) {
         const err = new Error("No image provided");
         error.statusCode = 201;
         throw err;
     }
-    if (image != req.body.image) {
-        //please configure this code this may not work properply right now
-        clearImage(req.body.image);
-    }
+    prescription.updatePres(id,mobile,title,date,image,doctor,observation).then(result=>{
+        t1 = "Prescription Updated " + title;
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A Prescription was updated on " + dd + " with observer name " + observer;
+        addNotification(t1, c1, mobile);
+        res.status(201).json({status:1,msg:'Prescription updated successfully'});
+    }).catch(err=>{
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
 }
 exports.getPrescriptions = (req, res, next) => {
     const errors = validationResult(req);
@@ -727,7 +734,35 @@ exports.deleteReports = (req, res, next) => {
     }
 }
 exports.updateReport = (req, res, next) => {
-
+    const title = req.body.title;
+    const observer = req.body.observer;
+    const date = req.body.date;
+    const detail = req.body.detail;
+    const mobile = req.body.mobile;
+    // const data = req.body.data;
+    const fileName = req.body.filename;
+    const typeF = req.body.type;
+    const category = req.body.category;
+    const id=req.body.id;
+    if (!fileName || !mobile || !id || !title || !date || !category || !observer || !typeF || !detail) {
+        const err = new Error("No image provided");
+        error.statusCode = 201;
+        throw err;
+    }
+    report.updateReport(id,mobile,title,observer,detail,date,fileName,typeF,category).then(result=>{
+        t1 = "Report Updated " + title;
+        var date2 = new Date();
+        let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
+        c1 = "A report was added on " + dd + " with observer name " + observer;
+        addNotification(t1, c1, mobile);
+        res.status(201).json({status:1,msg:'Report updated successfully'});
+    }).catch(err=>{
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
 }
 exports.upgradeProfile = (req, res, next) => {
     const mobile = req.body.mobile;

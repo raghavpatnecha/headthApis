@@ -93,5 +93,8 @@ router.post('/deleteEmergency',controlauth.deleteEmergency);
 router.post('/deleteData',controlauth.deleteData);
 //add images to backed in base64 from android
 router.post('/addImage64',controlauth.addImage64);
+//updating reports and prescriptions
+router.post('/updatePrescription',controlauth.updatePrescription);
+router.post('/updateReport',controlauth.updateReport);
 
 module.exports=router;
