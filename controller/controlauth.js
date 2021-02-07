@@ -313,7 +313,7 @@ exports.updatePrescription = (req, res, next) => {
         t1 = "Prescription Updated " + title;
         var date2 = new Date();
         let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
-        c1 = "A Prescription was updated on " + dd + " with observer name " + observer;
+        c1 = "A Prescription was updated on " + dd + " with observer name " + observation;
         addNotification(t1, c1, mobile);
         res.status(201).json({status:1,msg:'Prescription updated successfully'});
     }).catch(err=>{
@@ -746,7 +746,7 @@ exports.updateReport = (req, res, next) => {
     const id=req.body.id;
     if (!fileName || !mobile || !id || !title || !date || !category || !observer || !typeF || !detail) {
         const err = new Error("No image provided");
-        error.statusCode = 201;
+        err.statusCode = 201;
         throw err;
     }
     report.updateReport(id,mobile,title,observer,detail,date,fileName,typeF,category).then(result=>{
