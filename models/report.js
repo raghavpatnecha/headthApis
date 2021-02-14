@@ -19,10 +19,13 @@ module.exports = class Report {
         return db.execute('DELETE FROM reports WHERE id=(?)',[id]);
     }
     static getReport(mobile) {
-        return db.execute('SELECT * FROM reports WHERE mobile=(?)', [mobile]);
+        return db.execute('SELECT * FROM reports WHERE mobile=(?) ORDER BY date DESC', [mobile]);
+    }
+    static getReverseReport(mobile) {
+        return db.execute('SELECT * FROM reports WHERE mobile=(?) ORDER BY date ASC', [mobile]);
     }
     static getReportTop(mobile) {
-        return db.execute('SELECT * FROM reports WHERE mobile=(?) LIMIT 3', [mobile]);
+        return db.execute('SELECT * FROM reports WHERE mobile=(?) ORDER BY date DESC LIMIT 3 ', [mobile]);
     }
     static updateReport(id,mobile,title,observer,details,date,link,type,category)
     {

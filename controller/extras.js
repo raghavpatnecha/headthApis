@@ -4,6 +4,7 @@ const medicine = require('../models/medicine');
 const allergy = require('../models/allergy');
 const al2 = require('../models/allergy');
 const emergency=require('../models/emergency');
+const qraccesshistory=require('../models/qraccesshistory');
 const notification = require('../models/notification');
 const bcrypt = require('bcryptjs');
 
@@ -512,9 +513,35 @@ exports.updateNotification=(req,res,next)=>{
         next(err);
     });
 }
+exports.updateLocationAccess=(req,res,next)=>{
+    const user=req.body.user;
+    const accesser=req.body.accesser;
+    const latitude=req.body.latitude;
+    const longitude=req.body.longitude;
+    const date=req.body.date;
+    const time=req.body.time;
+    console.log(user," ",accesser," ",latitude," ",longitude," ",date," ",time);
+    if(!user||!accesser||!date||!time||!latitude||!longitude)
+    {
+        const err=new Error("Invalid request");
+        err.statusCode=200;
+        throw err;
+    }
+    const qr=new qraccesshistory(user,accesser,date,time,latitude,longitude);
+    qr.save().then(result=>{
+        res.status(201).json({status:1,msg:'Qr access recorded'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    })
+}
 function addNotification(title, content, mobile) {
     var date = new Date();
-    let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    let dd = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     const N = new notification(mobile, title, content, dd);
     N.save().then(res => {
         console.log("Notification added successfully");

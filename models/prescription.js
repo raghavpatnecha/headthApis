@@ -29,7 +29,11 @@ module.exports=class Prescription{
     }
     static getAllById(mobile)
     {
-        return db.execute('SELECT * FROM prescriptions WHERE mobile=(?)',[mobile]);
+        return db.execute('SELECT * FROM prescriptions WHERE mobile=(?) ORDER BY date DESC',[mobile]);
+    }
+    static reverseOrder(mobile)
+    {
+        return db.execute('SELECT * FROM prescriptions WHERE mobile=(?) ORDER BY date ASC',[mobile]);
     }
     static deletePres(id)
     {

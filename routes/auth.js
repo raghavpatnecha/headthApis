@@ -29,6 +29,7 @@ router.post('/getImage',controlauth.addImage);
 //route to get prescriptions by mobile number which is unique
 router.post('/getprescriptions',[body('mobile').trim().isLength({min:10}).withMessage("please Enter a valid phone number")],controlauth.getPrescriptions);
 
+
 router.post('/updateUser', [
     body('mobile').trim().isLength({min:10}),
     body('name').trim().isLength({min:3}),
@@ -73,6 +74,8 @@ router.post('/addReport',controlauth.addReport);
 router.post('/getReports',controlauth.getReports);
 //route to get top reports
 router.post('/gettopreport',controlauth.getTopReports);
+//route to get reverse prescriptions
+router.post('/getReverseReports',controlauth.getReverseReports);
 //route for qr scanner
 router.post('/getQR',controlauth.qrScanner);
 //to get the level of the user
@@ -96,5 +99,6 @@ router.post('/addImage64',controlauth.addImage64);
 //updating reports and prescriptions
 router.post('/updatePrescription',controlauth.updatePrescription);
 router.post('/updateReport',controlauth.updateReport);
-
+//route to record the qr access history and also the location where it was recorded
+router.post('/recordLocation',extras.updateLocationAccess);
 module.exports=router;

@@ -279,6 +279,23 @@ exports.getReports = (req, res, next) => {
         next(err);
     });
 }
+exports.getReverseReports = (req, res, next) => {
+    const mobile = req.body.mobile;
+    if (!mobile || !mobile.length == 10) {
+        const err = new Error("Please supply a valid mobile number");
+        err.statusCode = 200;
+        throw err;
+    }
+    report.getReverseReport(mobile).then(reports => {
+        res.status(201).json({ status: 1, data: reports[0] });
+    }).catch(err => {
+        console.log(err);
+        if (!err.statusCode) {
+            err.statusCode = 200;
+        }
+        next(err);
+    });
+}
 exports.getTopReports = (req, res, next) => {
     const mobile = req.body.mobile;
     if (!mobile || !mobile.length == 10) {
@@ -306,7 +323,7 @@ exports.updatePrescription = (req, res, next) => {
     const image = req.body.image;
     if (!image || !mobile || !id || !title || !date || !doctor || !observation) {
         const err = new Error("No image provided");
-        error.statusCode = 201;
+        err.statusCode = 201;
         throw err;
     }
     prescription.updatePres(id,mobile,title,date,image,doctor,observation).then(result=>{
@@ -348,6 +365,7 @@ exports.getPrescriptions = (req, res, next) => {
         next(err);
     })
 }
+
 exports.getProfile = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty) {
@@ -730,7 +748,7 @@ exports.deleteReports = (req, res, next) => {
         let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
         c1 = "A prescription was deleted on " + dd;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: "All marked prescriptions deleted" });
+        res.status(201).json({ status: 1, msg: "All marked Reports deleted" });
     }
 }
 exports.updateReport = (req, res, next) => {
@@ -753,7 +771,7 @@ exports.updateReport = (req, res, next) => {
         t1 = "Report Updated " + title;
         var date2 = new Date();
         let dd = date2.getDate() + "-" + date2.getMonth() + "-" + date2.getFullYear();
-        c1 = "A report was added on " + dd + " with observer name " + observer;
+        c1 = "A report was updated on " + dd ;
         addNotification(t1, c1, mobile);
         res.status(201).json({status:1,msg:'Report updated successfully'});
     }).catch(err=>{
@@ -800,13 +818,14 @@ exports.checkProfilestatus = (req, res, next) => {
         next(err);
     });
 }
+
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filePath);
     fs.unlink(filePath, err => { console.log(err) });
 }
 function addNotification(title, content, mobile) {
     var date = new Date();
-    let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    let dd = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     const N = new notification(mobile, title, content, dd);
     N.save().then(res => {
         console.log("Notification added successfully");
