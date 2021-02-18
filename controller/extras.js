@@ -6,6 +6,7 @@ const al2 = require('../models/allergy');
 const emergency=require('../models/emergency');
 const qraccesshistory=require('../models/qraccesshistory');
 const notification = require('../models/notification');
+const otptable=require('../models/otptable');
 const bcrypt = require('bcryptjs');
 
 exports.addAllergy = (req, res, next) => {
@@ -422,6 +423,98 @@ exports.getNotification = (req, res, next) => {
         console.log(err);
         if (!err.statusCode) {
             err.statusCode = 200;
+        }
+        next(err);
+    })
+}
+exports.setOtpVerifier=(req,res,next)=>{
+    const number=req.body.number;
+    const otp=req.body.otp;
+    console.log(number," ",otp);
+    if(!number||!otp)
+    {
+        const err=new Error("Invalid data");
+        err.statusCode=200;
+        throw err;
+    }
+    let oo=new otptable(number,otp);
+    oo.save().then(result=>{
+        res.status(201).json({status:1,msg:'otp of your number stated'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.deleteOtp=(req,res,next)=>{
+    const number=req.body.number;
+    console.log(number," ");
+    if(!number)
+    {
+        const err=new Error("Invalid data");
+        err.statusCode=200;
+        throw err;
+    }
+    otptable.deleter(number).then(result=>{
+        res.status(201).json({status:1,msg:'otp of your number deleted'});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    });
+}
+exports.updateOtpVerifier=(req,res,next)=>{
+    const number=req.body.number;
+    const otp=req.body.otp;
+    console.log(number," ",otp);
+    if(!number||!otp)
+    {
+        const err=new Error("Invalid data");
+        err.statusCode=200;
+        throw err;
+    }
+    otptable.updater(number,otp).then(result=>{
+        res.status(201).json({status:1,msg:"your otp is updated"});
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
+        }
+        next(err);
+    })
+}
+exports.checkOtpVerifier=(req,res,next)=>{
+    const number=req.body.number;
+    const otp=req.body.otp;
+    console.log(number," ",otp);
+    if(!number||!otp)
+    {
+        const err=new Error("Invalid data");
+        err.statusCode=200;
+        throw err;
+    }
+    otptable.checker(number).then(result=>{
+        let rr=result[0];
+        rr=rr[0];
+        if(rr.otp===otp)
+        {
+            res.status(201).json({status:1,msg:'otp verified successfully'});
+        }
+        else{
+            res.status(201).json({status:0,msg:'otp verification failed'});
+        }
+    }).catch(err=>{
+        console.log(err);
+        if(!err.statusCode)
+        {
+            err.statusCode=200;
         }
         next(err);
     })

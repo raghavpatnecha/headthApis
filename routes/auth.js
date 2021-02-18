@@ -101,4 +101,9 @@ router.post('/updatePrescription',controlauth.updatePrescription);
 router.post('/updateReport',controlauth.updateReport);
 //route to record the qr access history and also the location where it was recorded
 router.post('/recordLocation',extras.updateLocationAccess);
+//user validator of otp after login
+router.post('/newOtp',extras.setOtpVerifier);
+router.post('/updateOtp',extras.updateOtpVerifier);
+router.post('/checkOtp',extras.checkOtpVerifier);
+router.post('/deleteOtp',extras.deleteOtp);
 module.exports=router;
