@@ -75,8 +75,8 @@ function logErr(req,res,next)
 app.use(logErr);
 
 //to overcome the  PayloadTooLargeError: request entity too large
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb',extended:true}));
+app.use(express.json({limit: '500mb'}));
+app.use(express.urlencoded({limit: '500mb',extended:true}));
 app.use(bodyParser.json());
 //initiating the session middleware in line 65
 app.use(session({secret:'HareKrishna',resave:false,saveUninitialized:false,store:sessionStore}));
