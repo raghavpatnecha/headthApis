@@ -366,6 +366,31 @@ exports.getPrescriptions = (req, res, next) => {
     })
 }
 
+exports.getReversePrescriptions = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty) {
+        const error = new Error('Some Errors are their');
+        error.statusCode = 422;
+        error.data = errors.array
+        throw error;
+    }
+    const mobile = req.body.mobile;
+    if (!mobile) {
+        const err = new Error("Invalid data");
+        err.statusCode = 200;
+        throw err;
+    }
+    prescription.reverseOrder(mobile).then(pres => {
+        res.status(201).json({ status: 1, data: pres[0] });
+    }).catch(err => {
+        console.log(err);
+        if (!err.statusCode) {
+            err.statusCode = 200;
+        }
+        next(err);
+    })
+}
+
 exports.getProfile = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty) {

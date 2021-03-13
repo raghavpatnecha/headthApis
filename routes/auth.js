@@ -29,6 +29,8 @@ router.post('/getImage',controlauth.addImage);
 //route to get prescriptions by mobile number which is unique
 router.post('/getprescriptions',[body('mobile').trim().isLength({min:10}).withMessage("please Enter a valid phone number")],controlauth.getPrescriptions);
 
+router.post('/getReverseprescriptions',[body('mobile').trim().isLength({min:10}).withMessage("please Enter a valid phone number")],controlauth.getReversePrescriptions);
+
 
 router.post('/updateUser', [
     body('mobile').trim().isLength({min:10}),
