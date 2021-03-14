@@ -100,7 +100,7 @@ exports.addDieseas = (req, res, next) => {
     }
     const die = new dieseas(mobile, name, details);
     die.save().then(result => {
-        t1 = "Dieseas added: " + name;
+        t1 = "Disease added: " + name;
         var date = new Date();
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         c1 = "A dieseas was added on " + dd;
@@ -270,12 +270,12 @@ exports.updateDieseas = (req, res, next) => {
         throw err;
     }
     dieseas.updateDiesease(id, name, details).then(result => {
-        t1 = "Diesease updated:  " + name;
+        t1 = "Disease updated:  " + name;
         var date = new Date();
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-        c1 = "A diesease was updated on " + dd;
+        c1 = "A disease was updated on " + dd;
         addNotification(t1, c1, mobile);
-        res.status(201).json({ status: 1, msg: 'Dieseas Updated..' });
+        res.status(201).json({ status: 1, msg: 'Disease Updated..' });
     }).catch(err => {
         console.log(err);
         if (!err.statusCode) {
@@ -402,10 +402,10 @@ exports.deleteDieases = (req, res, next) => {
                 console.log(result);
             });
         }
-        t1 = "Dieseas deleted";
+        t1 = "Disease deleted";
         var date = new Date();
         let dd = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-        c1 = "Item or Items in dieseases are deleted on: " + dd;
+        c1 = "Item or Items in disease are deleted on: " + dd;
         addNotification(t1, c1, mobile);
         res.status(201).json({ status: 1, msg: "Items deleted successfully" });
     }
